@@ -12,6 +12,8 @@ namespace mobile_irc
 
 		public long Date { get; set; }
 
+		public bool IsFromSelf { get; set; }
+
 		public string ParsedDate
 		{
 			get 
@@ -50,7 +52,8 @@ namespace mobile_irc
 			{
 				Text = pm.Message,
 				Sender = pm.User.Nick,
-				Date = DateTime.Now.TotalMilliseconds()
+				Date = DateTime.Now.TotalMilliseconds(),
+				IsFromSelf = false
 			};
 		}
 
@@ -60,7 +63,8 @@ namespace mobile_irc
 			{
 				Text = message,
 				Sender = user,
-				Date = DateTime.Now.TotalMilliseconds()
+				Date = DateTime.Now.TotalMilliseconds(),
+				IsFromSelf = true
 			};
 		}
 	}

@@ -9,7 +9,7 @@ namespace mobile_irc.Droid
 {
 	public class SendButton : RelativeLayout
 	{
-		public EventHandler<EventArgs> Pressed;
+		public new EventHandler<EventArgs> Pressed;
 
 		TextView text;
 

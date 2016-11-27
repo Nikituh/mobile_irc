@@ -13,11 +13,13 @@ namespace mobile_irc.Droid
 
 		LinearLayout dataContainer;
 
+		GradientDrawable background;
+
 		public MessageView(Context context) : base(context)
 		{
 			Orientation = Orientation.Vertical;
 
-			var background = new GradientDrawable();
+			background = new GradientDrawable();
 			background.SetColor(Colors.NearWhite);
 			background.SetCornerRadius(10);
 
@@ -30,7 +32,7 @@ namespace mobile_irc.Droid
 			LayoutParameters = new AbsListView.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent);
 
 			var messageLayout = new LinearLayout.LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
-			messageLayout.SetMargins(5, 5, 5, 5);
+			messageLayout.SetMargins(10, 5, 10, 5);
 			message.LayoutParameters = messageLayout;
 
 			dataContainer = new LinearLayout(context);
@@ -68,6 +70,25 @@ namespace mobile_irc.Droid
 
 			sender.Text = message.Sender;
 			date.Text = message.ParsedDate;
+
+			if (message.IsFromSelf)
+			{
+				background.SetColor(Colors.CustomRed);
+				this.message.SetTextColor(Color.White);
+
+				sender.SetTextColor(Color.LightGray);
+				date.SetTextColor(Color.LightGray);
+			}
+			else
+			{
+				background.SetColor(Colors.NearWhite);
+				this.message.SetTextColor(Color.Black);
+
+				sender.SetTextColor(Color.Gray);
+				date.SetTextColor(Color.Gray);
+			}
+
+
 		}
 	}
 }

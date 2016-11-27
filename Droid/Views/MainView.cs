@@ -19,31 +19,30 @@ namespace mobile_irc.Droid
 
 		ListView list;
 
-		LinearLayout content;
+		RelativeLayout content;
+
+		Context context;
 
 		public MainView(Context context) : base(context)
 		{
-			Background = new ColorDrawable(Color.White);
+			this.context = context;
 
+			Background = new ColorDrawable(Color.White);
 			LayoutParameters = new RelativeLayout.LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
 
-			content = new LinearLayout(context);
-			content.LayoutParameters = new LinearLayout.LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
-			content.Orientation = Orientation.Vertical;
+			content = new RelativeLayout(context);
+			content.LayoutParameters = new RelativeLayout.LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
 
 			AddView(content);
 
-			int w = context.Resources.DisplayMetrics.WidthPixels;
-			int h = context.Resources.DisplayMetrics.HeightPixels;
 
 			list = new ListView(context);
-			list.LayoutParameters = new LinearLayout.LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent, 1);
+			list.SetPadding(10, 10, 10, 10);
+			list.DividerHeight = 10;
 
 			content.AddView(list);
 
 			SendMessage = new SendMessageView(context);
-			SendMessage.LayoutParameters = new LinearLayout.LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent, 9);
-
 			content.AddView(SendMessage);
 
 			list.Adapter = new MessageListAdapter(context);
@@ -51,6 +50,30 @@ namespace mobile_irc.Droid
 			Indicator = new ConnectionIndicator(context);
 
 			AddView(Indicator);
+
+			SetLayout();
+		}
+
+		int initialSize;
+
+		void SetLayout()
+		{
+			int w = context.Resources.DisplayMetrics.WidthPixels;
+			int h = context.Resources.DisplayMetrics.HeightPixels;
+
+			if (initialSize == 0)
+			{
+				initialSize = h / 12;
+			}
+
+			var layout = new RelativeLayout.LayoutParams(w, initialSize);
+			layout.AddRule(LayoutRules.AlignParentBottom);
+
+			SendMessage.LayoutParameters = layout;
+
+			h -= initialSize;
+
+			list.LayoutParameters = new RelativeLayout.LayoutParams(w, h);
 		}
 	}
 }

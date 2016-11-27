@@ -24,7 +24,6 @@ namespace mobile_irc.Droid
 
 			Button = new SendButton(context);
 			Button.LayoutParameters = new LinearLayout.LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent, 3);
-			//Button.SetPadding(10, 5, 10, 5);
 
 			AddView(Button);
 		}

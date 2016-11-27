@@ -16,7 +16,7 @@ namespace mobile_irc.Droid
 	{
 		const string Server = "irc.quakenet.org";
 
-		static string Channel = "#nikitest";
+		static string Channel = "#õlidnd";
 		static string Nickname = "NikiMobile";
 		static string User = "niki";
 
@@ -33,7 +33,7 @@ namespace mobile_irc.Droid
 
 			Client = new IrcClient(Server, new IrcUser(Nickname, User));
 
-			Window.SetSoftInputMode(Android.Views.SoftInput.StateHidden | Android.Views.SoftInput.AdjustNothing);
+			Window.SetSoftInputMode(Android.Views.SoftInput.StateHidden | Android.Views.SoftInput.AdjustResize);
 
 			ActionBar.SetBackgroundDrawable(new ColorDrawable(Colors.CustomRed));
 
@@ -54,6 +54,12 @@ namespace mobile_irc.Droid
 		void SendMessage(object sender, EventArgs e)
 		{
 			string message = (string)sender;
+
+			if (!Client.Channels.Contains(Channel))
+			{
+				Alert("Whoops! This channel doesn't appear to be in your list");
+				return;
+			}
 
 			var channel = Client.Channels[Channel];
 			channel.SendMessage(message);
@@ -82,6 +88,11 @@ namespace mobile_irc.Droid
 			{
 				ContentView.Adapter.NotifyDataSetChanged();
 			});
+		}
+
+		void Alert(string message)
+		{
+			Toast.MakeText(this, message, ToastLength.Short).Show();
 		}
 	}
 }
